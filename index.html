@@ -3069,5 +3069,37 @@ window.tcSetLanguage=setLang;window.tcGetLanguage=()=>lang;window.tcTranslateTex
 })();
 </script>
 
+<style id="tc-home-calendar-link-style">
+#tc-home-current.tc-home-card{cursor:pointer;transition:border-color .15s ease,background-color .15s ease}
+#tc-home-current.tc-home-card:hover{border-color:rgba(240,210,143,.70)}
+#tc-home-current.tc-home-card:focus-visible{outline:2px solid #f0d28f;outline-offset:3px}
+</style>
+<script id="tc-home-calendar-link-script">
+(function(){
+  function openCalendar(){
+    if(typeof showTool === 'function') {
+      showTool('calendar');
+      if(typeof window.tcCalendarRender==='function')window.tcCalendarRender();
+      // Ne pas forcer un retour brutal en haut de page après le changement de vue.
+      // Le navigateur conserve ainsi une position stable pendant l'ouverture.
+
+    }
+  }
+  function bind(){
+    var banner=document.getElementById('tc-home-current');
+    if(!banner)return;
+    banner.setAttribute('role','link');
+    banner.setAttribute('tabindex','0');
+    banner.setAttribute('aria-label','Ouvrir le calendrier Top Commandant');
+    banner.setAttribute('title','Ouvrir le calendrier Top Commandant');
+    banner.addEventListener('click',openCalendar);
+    banner.addEventListener('keydown',function(e){
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();openCalendar();}
+    });
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind);
+  else bind();
+})();
+</script>
 </body></html>
 <script>initFragments();</script>
